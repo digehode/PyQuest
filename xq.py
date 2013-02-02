@@ -2,31 +2,34 @@ import pygame as pg
 from pygame.locals import *
 import random
 import math
-screen_size=w,h=800,600
 
+#Variables
+screen_size=w,h=800,600
 black=(0,0,0)
 green=(0,100,0)
+forceVect=[0,0]
+speed=0.1
+shallRun=True
+linepos=[0,0,w,h]
+shipAngle=0
+
+#PyGame setup
 pg.init()
 screen = pg.display.set_mode(screen_size)
 pg.display.set_caption("PyQuest")
 clock = pg.time.Clock()
 font1=pg.font.Font(None, 20)
-
-shallRun=True
-
-linepos=[0,0,w,h]
 ship=pg.image.load("ship.png").convert_alpha()
 shipRect=ship.get_rect()
-shipAngle=0
 pg.mouse.set_visible(False)
 pg.event.set_grab(True)
-forceVect=[0,0]
-speed=0.1
 screen_rect=screen.get_rect()
+
+
 while shallRun:
-  screen.fill(black)
+	screen.fill(black)
 	pg.draw.aaline(screen, green, shipRect.center, linepos[2:])
-	shipAngle=math.degrees(math.atan2(forceVect[0],forceVect[1]))
+	shipAngle=math.degrees(math.atan2(forceVect[0],forceVect[1]))+180
 	tmpImg=pg.transform.rotate(ship,shipAngle)
 	tmpRect=tmpImg.get_rect()
 	tmpRect.center=shipRect.center
